@@ -29,7 +29,7 @@ build {
   }
 
   post-processor "docker-tag" {
-    repository = "my-docker-image"
+    repository = "s3cloudhub/my-repo"
     tag        = ["latest", "v1.0.0"]
   }
 }
