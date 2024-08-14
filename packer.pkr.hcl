@@ -29,7 +29,7 @@ build {
   }
 
   post-processor "docker-tag" {
-    repository = "my-repo/my-docker-image"
+    repository = "my-docker-image"
     tag        = ["latest", "v1.0.0"]
   }
 }
