@@ -26,6 +26,6 @@ build {
 
   post-processor "docker-tag" {
     repository = "my-repo/my-image"
-    tag        = "latest"
+    tag        = ["latest"]  # Corrected to a list of strings
   }
 }
