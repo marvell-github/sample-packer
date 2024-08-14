@@ -25,13 +25,13 @@ jobs:
     - name: Setup Packer
       uses: hashicorp/setup-packer@v3
       with:
-        packer_version: 'latest' # Adjust if necessary
+        packer_version: 'latest'
 
-    - name: Validate Packer Template
-      run: packer validate packer.json
+    - name: Validate Packer Configuration
+      run: packer validate packer.pkr.json
 
     - name: Build Docker Image with Packer
-      run: packer build packer.json
+      run: packer build packer.pkr.json
 
     - name: Push Docker Image
       run: |
