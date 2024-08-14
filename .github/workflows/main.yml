@@ -1,4 +1,4 @@
-name: Packer Build
+name: Packer Docker Build
 
 on:
   push:
@@ -13,20 +13,27 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Login to DockerHub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+
     - name: Setup Packer
       uses: hashicorp/setup-packer@v3
       with:
         packer_version: 'latest'
 
-    - name: Install AWS Plugin
-      run: |
-        mkdir -p ~/.packer.d/plugins
-        wget https://releases.hashicorp.com/packer-plugin-amazon/1.0.2/packer-plugin-amazon_1.0.2_linux_amd64.zip
-        unzip packer-plugin-amazon_1.0.2_linux_amd64.zip -d ~/.packer.d/plugins
-        chmod +x ~/.packer.d/plugins/*
-
     - name: Validate Packer Template
       run: packer validate packer.json
 
-    - name: Build Packer Image
+    - name: Build Docker Image with Packer
       run: packer build packer.json
+
+    - name: Push Docker Image
+      run: |
+        docker images
+        docker push my-docker-image:v1.0.0
