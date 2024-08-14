@@ -28,7 +28,7 @@ jobs:
         packer_version: 'latest'
 
     - name: Validate Packer Configuration
-      run: packer validate packer.pkr.json
+      run: packer validate packer.json
 
     - name: Build Docker Image with Packer
       run: packer build packer.json
