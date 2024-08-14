@@ -8,7 +8,7 @@ packer {
   }
 }
 
-# Define the source for Docker
+# Define the Docker source
 source "docker" "ubuntu" {
   image = "ubuntu:20.04"
 }
@@ -17,6 +17,7 @@ source "docker" "ubuntu" {
 build {
   sources = ["source.docker.ubuntu"]
 
+  # Provisioners to configure the Docker image
   provisioner "shell" {
     inline = [
       "apt-get update",
@@ -25,7 +26,13 @@ build {
     ]
   }
 
+  # Post-processors to handle the Docker image
   post-processor "docker-tag" {
+    repository = "my-docker-image"
+    tag        = "v1.0.0"
+  }
+
+  post-processor "docker-push" {
     repository = "my-docker-image"
     tag        = "v1.0.0"
   }
