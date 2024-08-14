@@ -1,3 +1,13 @@
+packer {
+  required_plugins {
+    docker = {
+      source  = "github.com/hashicorp/docker"
+      version = "~> 1"
+    }
+  }
+}
+
+
 # Define the build block
 source "docker" "my_docker_image" {
   # Base Docker image to use
