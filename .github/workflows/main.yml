@@ -15,9 +15,15 @@ jobs:
 
     - name: Setup Packer
       uses: hashicorp/setup-packer@v3
+      with:
+        packer_version: '1.8.0' # Specify a known working version, adjust as needed
 
     - name: Validate Packer Template
       run: packer validate packer.json
 
     - name: Build Packer Image
       run: packer build packer.json
+
+    - name: Post Build Cleanup
+      run: rm -rf packer_cache
+      # This step cleans up any temporary files Packer may have created during the build process.
