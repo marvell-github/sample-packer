@@ -27,6 +27,9 @@ jobs:
       with:
         packer_version: 'latest'
 
+    - name: Initialize Packer
+      run: packer init .
+
     - name: Validate Packer Configuration
       run: packer validate packer.pkr.hcl
 
@@ -35,5 +38,4 @@ jobs:
 
     - name: Push Docker Image
       run: |
-        docker images
         docker push my-docker-image:v1.0.0
