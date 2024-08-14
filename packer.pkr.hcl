@@ -8,32 +8,37 @@ packer {
   }
 }
 
-# Define the Docker source
-source "docker" "ubuntu" {
+# Define the Docker builder
+builder "docker" {
+  # Base Docker image to use
   image = "ubuntu:20.04"
-}
-
-# Define the build steps
-build {
-  sources = ["source.docker.ubuntu"]
-
-  # Provisioners to configure the Docker image
-  provisioner "shell" {
-    inline = [
-      "apt-get update",
-      "apt-get install -y nginx",
-      "echo 'Hello, World!' > /var/www/html/index.html"
-    ]
+  
+  # Whether to commit the changes to a new image
+  commit = true
+  
+  # List of Dockerfile-like commands to modify the base image
+  change {
+    type    = "run"
+    command = "apt-get update -y"
   }
 
-  # Post-processors to handle the Docker image
-  post-processor "docker-tag" {
-    repository = "my-docker-image"
-    tag        = "v1.0.0"
-  }
-
-  post-processor "docker-push" {
-    repository = "my-docker-image"
-    tag        = "v1.0.0"
+  change {
+    type    = "run"
+    command = "apt-get install -y curl"
   }
 }
+
+# Define provisioners to configure the image
+provisioner "shell" {
+  inline = [
+    "echo 'Hello, Packer!' > /hello.txt",
+    "curl -sSL https://get.docker.com | sh"
+  ]
+}
+
+# Post-processors to tag the Docker image
+post-processor "docker-tag" {
+  repository = "my-repo/my-image"
+  tag        = "latest"
+}
+
