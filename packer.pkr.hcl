@@ -19,6 +19,8 @@ build {
 
   provisioner "shell" {
     inline = [
+      "apt-get update -y",
+      "apt-get install -y curl",
       "echo 'Hello, Packer!' > /hello.txt",
       "curl -sSL https://get.docker.com | sh"
     ]
