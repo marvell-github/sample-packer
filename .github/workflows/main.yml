@@ -38,4 +38,4 @@ jobs:
 
     - name: Push Docker Image
       run: |
-        docker push my-repo/my-docker-image:v1.0.0
+        docker push s3cloudhub/my-repo/my-docker-image:v1.0.0
