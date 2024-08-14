@@ -1,0 +1,23 @@
+name: Packer Build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Setup Packer
+      uses: hashicorp/setup-packer@v1
+
+    - name: Validate Packer Template
+      run: packer validate packer.json
+
+    - name: Build Packer Image
+      run: packer build packer.json
