@@ -25,7 +25,7 @@ jobs:
     - name: Setup Packer
       uses: hashicorp/setup-packer@v3
       with:
-        packer_version: 'latest'
+        packer_version: 'latest' # Adjust if necessary
 
     - name: Validate Packer Template
       run: packer validate packer.json
