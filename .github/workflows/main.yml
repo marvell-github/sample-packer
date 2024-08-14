@@ -28,10 +28,10 @@ jobs:
         packer_version: 'latest'
 
     - name: Validate Packer Configuration
-      run: packer validate packer.json
+      run: packer validate packer.pkr.hcl
 
     - name: Build Docker Image with Packer
-      run: packer build packer.json
+      run: packer build packer.pkr.hcl
 
     - name: Push Docker Image
       run: |
