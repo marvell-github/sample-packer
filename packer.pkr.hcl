@@ -7,13 +7,11 @@ packer {
   }
 }
 
-# Define the Docker source
 source "docker" "my_docker_image" {
   image  = "ubuntu:20.04"
   commit = true
 }
 
-# Define the build block
 build {
   sources = ["source.docker.my_docker_image"]
 
@@ -32,6 +30,6 @@ build {
 
   post-processor "docker-tag" {
     repository = "my-repo/my-docker-image"
-    tag        = ["latest"]
+    tag        = ["latest", "v1.0.0"]
   }
 }
