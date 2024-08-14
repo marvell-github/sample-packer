@@ -16,14 +16,17 @@ jobs:
     - name: Setup Packer
       uses: hashicorp/setup-packer@v3
       with:
-        packer_version: '1.8.0' # Specify a known working version, adjust as needed
+        packer_version: 'latest' # Ensure you're using a version that supports plugins
+
+    - name: Install AWS Plugin
+      run: |
+        mkdir -p ~/.packer.d/plugins
+        wget https://releases.hashicorp.com/packer-plugin-amazon/<version>/packer-plugin-amazon_<version>_linux_amd64.zip
+        unzip packer-plugin-amazon_<version>_linux_amd64.zip -d ~/.packer.d/plugins
+        chmod +x ~/.packer.d/plugins/*
 
     - name: Validate Packer Template
       run: packer validate packer.json
 
     - name: Build Packer Image
       run: packer build packer.json
-
-    - name: Post Build Cleanup
-      run: rm -rf packer_cache
-      # This step cleans up any temporary files Packer may have created during the build process.
